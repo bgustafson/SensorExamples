@@ -31,10 +31,26 @@ public class PressureSensorActivity extends AppCompatActivity implements SensorE
         pressView = (TextView) findViewById(R.id.pressTxt);
     }
 
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mSensorManager.registerListener(this, pS, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {

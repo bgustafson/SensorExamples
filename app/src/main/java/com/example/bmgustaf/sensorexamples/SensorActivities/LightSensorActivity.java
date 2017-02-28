@@ -29,11 +29,27 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         lightView = (TextView) findViewById(R.id.lxTxt);
     }
 
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mSensorManager.registerListener(this, mLightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float[] values = sensorEvent.values;
         lightView.setText("" + values[0]);
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {

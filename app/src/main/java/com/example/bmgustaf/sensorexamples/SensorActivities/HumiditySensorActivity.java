@@ -32,6 +32,20 @@ public class HumiditySensorActivity extends AppCompatActivity implements SensorE
 
 
     @Override
+    protected void onPause(){
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        mSensorManager.registerListener(this, mHumiditySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
+    @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         float[] values = sensorEvent.values;
         humidityView.setText("" + values[0]);
